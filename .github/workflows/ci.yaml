@@ -37,7 +37,7 @@ jobs:
         run: pnpm lint
 
       - name: Security scan
-        run: npm audit
+        run: pnpm audit
 
       - name: Build application
         run: pnpm build
