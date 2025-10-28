@@ -3,10 +3,9 @@ name: CI
 on:
   push:
     branches: [main]
-    workflow_dispatch
-    
-jobs:
+  workflow_dispatch:
 
+jobs:
   echo-hello:
     runs-on: ubuntu-latest
     steps:
@@ -16,10 +15,5 @@ jobs:
   echo-goodbye:
     runs-on: ubuntu-latest
     steps:
-      - name: Multi-line bash
-        run: |
-          echo "I will fail"
-          exit 1
-
       - name: Say goodbie
         run: echo "Goodbye!"
