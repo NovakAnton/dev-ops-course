@@ -6,14 +6,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  echo-hello:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-25.10
     steps:
-      - name: Say hello
-        run: echo "Hello, World!!"
+      - uses: actions/checkout@v4
 
-  echo-goodbye:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Say goodbie
-        run: echo "Goodbye!"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm 10.19.0
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Use Node.js 24.11.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Run end-to-end tests
+        run: pnpm test:e2e
+
+      - name: Code quality checks
+        run: pnpm lint
+
+      - name: Security scan
+        run: npm audit
+
+      - name: Build application
+        run: pnpm build
