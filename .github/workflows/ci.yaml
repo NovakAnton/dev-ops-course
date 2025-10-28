@@ -14,17 +14,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install pnpm 10.19.0
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.19.0
-
       - name: Use Node.js 24.11.0
         uses: actions/setup-node@v4
         with:
           node-version: 24.11.0
+          cache: pnpm
 
-      - name: Install dependencies
+      - name: Install pnpm 10.19.0
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+          run_install: false
+
+      - name: Install dependencies (locked)
         run: pnpm install --frozen-lockfile
 
       - name: Run unit tests
