@@ -24,10 +24,20 @@ jobs:
           node-version: 24.11.0
           cache: pnpm
 
+      - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Lint
         run: pnpm lint
+
+      - name: Unit tests
         run: pnpm test
+
+      - name: E2E tests
         run: pnpm test:e2e
+
+      - name: Audit
         run: pnpm audit
+
+      - name: Build
         run: pnpm build
