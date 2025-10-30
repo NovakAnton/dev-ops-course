@@ -1,4 +1,4 @@
-name: CI
+name: ci
 
 on:
   push:
@@ -7,9 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  ci:
+  build-and-test:
     runs-on: ubuntu-24.04
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,3 +45,17 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+  automerge:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    needs: build-and-test
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge PR now
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --squash --delete-branch --admin "$PR_URL"
