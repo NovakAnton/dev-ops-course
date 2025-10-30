@@ -54,11 +54,7 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-<<<<<<< HEAD
       - name: Squash merge PR
-=======
-      - name: Merge PR now
->>>>>>> main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
