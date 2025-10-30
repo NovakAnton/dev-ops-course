@@ -58,4 +58,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr merge --merge --admin "$PR_URL"
+        run: gh pr merge --squash --delete-branch --admin "$PR_URL"
